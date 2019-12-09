@@ -6,7 +6,6 @@ import pandas as pd
 import requests
 from io import StringIO
 from argparse import ArgumentParser
-import rdbu_uniform
 
 URL = 'https://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.6.0.0.annual_ns_avg.txt'
 FIRST = 1850
