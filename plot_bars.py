@@ -7,9 +7,9 @@ import requests
 from io import StringIO
 from argparse import ArgumentParser
 
-URL = 'https://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.6.0.0.annual_ns_avg.txt'
+URL = 'https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv'
 FIRST = 1850
-LAST = 2020  # inclusive
+LAST = 2022  # inclusive
 
 # Reference period for the center of the color scale
 FIRST_REFERENCE = 1971
@@ -47,16 +47,13 @@ parser.add_argument('--dpi', help='dots per inch', default=300, type=float)
 if __name__ == '__main__':
     args = parser.parse_args()
 
-    r = requests.get(URL)
-    df = pd.read_fwf(
-        StringIO(r.text),
+    req = requests.get(URL)
+    df = pd.read_csv(
+        StringIO(req.text),
         index_col=0,
-        usecols=(0, 1),
-        names=['year', 'anomaly'],
-        header=None,
     )
-
-    year_median = df.loc[FIRST:LAST, 'anomaly'].dropna()
+    
+    year_median = df.loc[FIRST:LAST, 'Anomaly (deg C)'].dropna()
     center = year_median.loc[FIRST_REFERENCE:LAST_REFERENCE].mean()
 
     fig = plt.figure(figsize=(args.width, args.height))
