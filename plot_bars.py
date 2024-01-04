@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 
 URL = 'https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.csv'
 FIRST = 1850
-LAST = 2022  # inclusive
+LAST = 2023  # inclusive
 
 # Reference period for the center of the color scale
 FIRST_REFERENCE = 1971
