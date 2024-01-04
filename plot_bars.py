@@ -7,7 +7,7 @@ import requests
 from io import StringIO
 from argparse import ArgumentParser
 
-URL = 'https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv'
+URL = 'https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.csv'
 FIRST = 1850
 LAST = 2022  # inclusive
 
@@ -48,11 +48,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     req = requests.get(URL)
+    req.raise_for_status()
     df = pd.read_csv(
         StringIO(req.text),
         index_col=0,
     )
-    
+
     year_median = df.loc[FIRST:LAST, 'Anomaly (deg C)'].dropna()
     center = year_median.loc[FIRST_REFERENCE:LAST_REFERENCE].mean()
 
